@@ -100,6 +100,13 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
 }
 
+function removeJumpscareBackground() {
+    const backgroundElement = document.querySelector('html');
+    if (backgroundElement) {
+        backgroundElement.style.backgroundImage = 'none';
+    }
+}
+
 function setJumpscareBackground() {
     const id = getRandomInt(0, jumpsCareImage.length-1); // ajuste para indexação correta
     const image = jumpsCareImage[id];
@@ -133,6 +140,7 @@ function getJumpscare() {
             head.classList.remove('removed');
             body.classList.remove('removed');
             document.exitFullscreen();
+            removeJumpscareBackground();
         }, 1800);
     }, 1000);
 }
