@@ -36,6 +36,7 @@ header {
     color: var(--orange);
     letter-spacing: 3px;
     text-shadow: 4px 4px black;
+    margin-bottom: 3%;
 }
 
 h1 {

@@ -9,22 +9,48 @@ let cardsImage = [
     "./images/pumpkin.jpg", "./images/pumpkin.jpg",
     "./images/scarecrow.jpg", "./images/scarecrow.jpg"
 ];
-
 let jumpsCareImage = [
-    "./images/jumpscare1.jpg",
+    "./images/jumpscare1.gif",
     "./images/jumpscare2.gif",
     "./images/jumpscare3.gif",
     "./images/jumpscare4.jpg",
     "./images/jumpscare5.gif",
     "./images/jumpscare6.gif",
-    "./images/jumpscare7.jpg",
-]
-
+    "./images/jumpscare7.jpg"
+];
 let tracks = [
     "./audio/audio1.mp3",
     "./audio/audio2.mp3",
-    "./audio/audio3.mp3",
-]
+    "./audio/audio3.mp3"
+];
+
+// pré-carregar as imagens de jumpscare
+function preloadJumpscareImages() {
+    jumpsCareImage.forEach(src => {
+        const img = new Image();
+        img.src = src;
+    });
+}
+
+// função para embaralhar um array usando o método Fisher-Yates
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Embaralhar as imagens das cartas ao carregar a página
+window.onload = function() {
+    preloadJumpscareImages(); // pre-carregar as imagens de jumpscare
+    shuffle(cardsImage); // Embaralhar o array de imagens
+    // Atualizar as cartas no HTML com as imagens embaralhadas
+    document.querySelectorAll('.card').forEach((card, index) => {
+        card.innerHTML = `<img src="./images/image-background.jpg" alt="Card Image" class="${getCardClass(cardsImage[index])}">`;
+    });
+}
+
 
 // Cada carta terá um eventListener caso elas forem clicadas e trará o index delas.
 document.querySelectorAll('.card').forEach((card, index) => {
@@ -117,8 +143,8 @@ function setJumpscareBackground() {
 }
 
 function setJumpscareSound() {
-    id = getRandomInt(0, tracks.length-1);
-    player = document.getElementById('audio-jumpscare');
+    const id = getRandomInt(0, tracks.length-1);
+    const player = document.getElementById('audio-jumpscare');
     player.src = tracks[id];
     player.play();
 }
@@ -134,7 +160,6 @@ function getJumpscare() {
         body.classList.add('removed');
         setJumpscareBackground();
         setJumpscareSound();
-
         setTimeout(() => {
             html.classList.remove('visible');
             head.classList.remove('removed');
@@ -182,4 +207,3 @@ function checkGameEnd() {
         getJumpscare();
     }
 }
-
